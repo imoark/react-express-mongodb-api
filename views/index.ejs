@@ -1,4 +1,8 @@
+<script type="text/javascript">
+	window.initialData = <%- JSON.stringify(initialData) -%>
+</script>
+
 <!-- This is an EJS feature called Partial View -->
 <%- include('header') -%>
-	<div id="root"><%- content -%> </div>
+	<div id="root"><%- initialMarkup -%> </div>
 <%- include('footer') -%>

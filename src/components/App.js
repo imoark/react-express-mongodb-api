@@ -4,7 +4,7 @@ import React from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
 
-import axios from 'axios';
+
 
 /* Let's assume that this component is going to need some state.
 We wanna make it dynamic based on where we are in the App.
@@ -31,15 +31,6 @@ class App extends React.Component {
 		contests: this.props.initialContests
 	};
 	componentDidMount(){
-		axios.get('/api/contests')
-			.then(resp => {
-				this.setState({
-					contests: resp.data.contests	
-				});
-				console.log(resp.data.contests);
-			})
-			.catch(console.error);
-
 
 	}
 	render() {

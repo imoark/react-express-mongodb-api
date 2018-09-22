@@ -30,12 +30,19 @@ it will look for the EJS templates under the "views" folder
 on the root level.*/
 server.set('view engine', 'ejs');
 
-import './serverRender';
+import serverRender from './serverRender';
 
 server.get('/', (req, res) => {
-	res.render('index', {
-		content: 'No Javascript'
-	});
+	serverRender()
+		.then( ({ initialMarkup, initialData}) => {
+			res.render('index', {
+				initialMarkup,
+				initialData
+			});
+		})
+		.catch(console.error);
+
+	
 });
 
 /* Instead of listening to a single request event, Express server also
