@@ -22474,6 +22474,7 @@
 		}
 		// Since we configured 'stage-2' in .babelrc, we can actually use
 		// a class property instead of having a constructor.
+		//
 		// constructor(props){
 		// 	super(props);
 		// 	this.state = { test: 42 };

@@ -30,6 +30,8 @@ it will look for the EJS templates under the "views" folder
 on the root level.*/
 server.set('view engine', 'ejs');
 
+import './serverRender';
+
 server.get('/', (req, res) => {
 	res.render('index', {
 		content: 'No Javascript'
@@ -63,7 +65,7 @@ the variable config, and the object port inside config variable. Thus,
 /* The second argument to the Express .listen() is the success handler,
 which is just a function. In this case, we will just output a line to
 the console.*/
-server.listen(config.port, () => {
+server.listen(config.port, config.host, () => {
 	console.info('Express listening to port ', config.port);
 });
 
