@@ -25,8 +25,15 @@ class App extends React.Component {
 	// 	this.state = { test: 42 };
 	// }
 	state = { 
-		pageHeader: 'Naming Contest' 
+		pageHeader: 'Naming Contest',
+		contests: []
 	};
+	componentDidMount(){
+		
+		this.setState({
+			contests: data.contests
+		});
+	}
 	render() {
 		return (
 		<div className="App">
