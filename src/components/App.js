@@ -28,13 +28,13 @@ class App extends React.Component {
 	// }
 	state = { 
 		pageHeader: 'Naming Contest',
-		contests: []
+		contests: this.props.initialContests
 	};
 	componentDidMount(){
 		axios.get('/api/contests')
 			.then(resp => {
 				this.setState({
-					contests: resp.data.contests
+					contests: resp.data.contests	
 				});
 				console.log(resp.data.contests);
 			})
