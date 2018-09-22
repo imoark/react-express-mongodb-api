@@ -4,6 +4,8 @@ import React from 'react';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
 
+import axios from 'axios';
+
 /* Let's assume that this component is going to need some state.
 We wanna make it dynamic based on where we are in the App.
 We wanna put the dynamic content as a "state".*/
@@ -29,17 +31,23 @@ class App extends React.Component {
 		contests: []
 	};
 	componentDidMount(){
-		
-		this.setState({
-			contests: data.contests
-		});
+		axios.get('/api/contests')
+			.then(resp => {
+				this.setState({
+					contests: resp.data.contests
+				});
+				console.log(resp.data.contests);
+			})
+			.catch(console.error);
+
+
 	}
 	render() {
 		return (
 		<div className="App">
 			<Header message={this.state.pageHeader} />
 			<div>
-				{this.props.contests.map( contest =>
+				{this.state.contests.map(contest =>
 						/* 
 						everytime we display a list of things dynamically,
 						REACT needs a little bit of help to identify every

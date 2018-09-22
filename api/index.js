@@ -6,7 +6,7 @@ import express from 'express';
 
 import data from '../src/testData';
 
-// we create a router object by calling the .Router() function in Express
+ // we create a router object by calling the .Router() function in Express
 const router = express.Router();
 
 /* We will define .get() function/calls on the "router" object, and
