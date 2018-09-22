@@ -4,6 +4,12 @@ import React from 'react';
 import Header from './Header';
 import ContestList from './ContestList';
 
+// We are putting the HTML5 History API as a function here.
+// We are using the most basic/standard way of routing, with the help
+// of HTML5 History API, to navigate back and forth.
+const pushState = (obj, url) =>
+	window.history.pushState(obj, '', url);
+
 /* Let's assume that this component is going to need some state.
 We wanna make it dynamic based on where we are in the App.
 We wanna put the dynamic content as a "state".*/
@@ -31,11 +37,18 @@ class App extends React.Component {
 	componentDidMount(){
 
 	}
+
+	fetchContest = (contestId) => {
+		pushState({ currentContestId: contestId },`/contest/${contestId}`)
+	};
+
 	render() {
 		return (
 		<div className="App">
 			<Header message={this.state.pageHeader} />
-			<ContestList contests={this.state.contests} />
+			<ContestList 
+				onContestClick={this.fetchContest}
+				contests={this.state.contests} />
 		</div>
 		);
 	}

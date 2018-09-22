@@ -22427,6 +22427,13 @@
 	// import component module of Header, so we keep this .js file concise
 	
 	
+	// We are putting the HTML5 History API as a function here.
+	// We are using the most basic/standard way of routing, with the help
+	// of HTML5 History API, to navigate back and forth.
+	var pushState = function pushState(obj, url) {
+		return window.history.pushState(obj, '', url);
+	};
+	
 	/* Let's assume that this component is going to need some state.
 	We wanna make it dynamic based on where we are in the App.
 	We wanna put the dynamic content as a "state".*/
@@ -22456,6 +22463,8 @@
 			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 				pageHeader: 'Naming Contest',
 				contests: _this.props.initialContests
+			}, _this.fetchContest = function (contestId) {
+				pushState({ currentContestId: contestId }, '/contest/' + contestId);
 			}, _temp), _possibleConstructorReturn(_this, _ret);
 		}
 		// Since we configured 'stage-2' in .babelrc, we can actually use
@@ -22477,7 +22486,9 @@
 					'div',
 					{ className: 'App' },
 					_react2.default.createElement(_Header2.default, { message: this.state.pageHeader }),
-					_react2.default.createElement(_ContestList2.default, { contests: this.state.contests })
+					_react2.default.createElement(_ContestList2.default, {
+						onContestClick: this.fetchContest,
+						contests: this.state.contests })
 				);
 			}
 		}]);
@@ -22570,6 +22581,7 @@
 	
 			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContestPreview.__proto__ || Object.getPrototypeOf(ContestPreview)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function () {
 				console.log(_this.props.contestName);
+				_this.props.onClick(_this.props.id);
 			}, _temp), _possibleConstructorReturn(_this, _ret);
 		}
 	
@@ -22598,7 +22610,9 @@
 	
 	ContestPreview.propTypes = {
 		categoryName: _react2.default.PropTypes.string.isRequired,
-		contestName: _react2.default.PropTypes.string.isRequired
+		contestName: _react2.default.PropTypes.string.isRequired,
+		onClick: _react2.default.PropTypes.func.isRequired
+	
 	};
 	
 	exports.default = ContestPreview;
@@ -22655,7 +22669,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ContestList = function ContestList(_ref) {
-			var contests = _ref.contests;
+			var contests = _ref.contests,
+			    onContestClick = _ref.onContestClick;
 			return _react2.default.createElement(
 					'div',
 					{ className: 'ContestList' },
@@ -22672,7 +22687,9 @@
 	        index as a unique key.
 	        */
 	
-									_react2.default.createElement(_ContestPreview2.default, _extends({ key: contest.id }, contest))
+									_react2.default.createElement(_ContestPreview2.default, _extends({ key: contest.id,
+											onClick: onContestClick
+									}, contest))
 							);
 					})
 			);
@@ -22680,7 +22697,8 @@
 	
 	// ContestList Prop Validation
 	ContestList.propTypes = {
-			contests: _react2.default.PropTypes.array
+			contests: _react2.default.PropTypes.array,
+			onContestClick: _react2.default.PropTypes.func.isRequired
 	};
 	
 	exports.default = ContestList;
