@@ -1,3 +1,5 @@
-module.exports = {
-	"port" : "8080"
+const env = process.env;
+
+export default {
+	port: env.PORT || 8080
 };

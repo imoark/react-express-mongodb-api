@@ -17,7 +17,7 @@ We wanna put the dynamic content as a "state".*/
 // };
 
 class App extends React.Component {
-	// Since we configured 'stage-2' in . babelrc, we can actually use
+	// Since we configured 'stage-2' in .babelrc, we can actually use
 	// a class property instead of having a constructor.
 	// constructor(props){
 	// 	super(props);
