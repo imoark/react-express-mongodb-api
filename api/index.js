@@ -22,5 +22,10 @@ router.get('/contests', (req,res) => {
 	});
 });
 
+router.get('/contests', (req,res) => {
+	res.send({ contests: contests
+	});
+});
+
 // Finally, to be able to use the const "router" object, we need to export it
 export default router;
