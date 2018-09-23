@@ -8,12 +8,18 @@ import data from '../src/testData';
 
  // we create a router object by calling the .Router() function in Express
 const router = express.Router();
+const contests = data.contests.reduce((obj, contest) => {
+		obj[contest.id] = contest;
+		return obj;
+		}, {});
 
 /* We will define .get() function/calls on the "router" object, and
 handle them in the second argument. Since this is gonna be an API call, 
 so we'll send a JSON response by sending an object here.*/
+/* reduce() function in data.contests converts from array to object */
 router.get('/contests', (req,res) => {
-	res.send({ contests: data.contests });
+	res.send({ contests: contests
+	});
 });
 
 // Finally, to be able to use the const "router" object, we need to export it

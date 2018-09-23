@@ -4,7 +4,7 @@ import ContestPreview from './ContestPreview';
 
 const ContestList = ({ contests, onContestClick }) => (
 		<div className="ContestList">
-				{contests.map(contest =>
+				{Object.keys(contests).map(contestId =>
 						/* 
 						everytime we display a list of things dynamically,
 						REACT needs a little bit of help to identify every
@@ -17,9 +17,9 @@ const ContestList = ({ contests, onContestClick }) => (
 						index as a unique key.
 						*/
 
-						<ContestPreview key={contest.id}
+						<ContestPreview key={contestId}
 						onClick={onContestClick}
-						{...contest} /> 
+						{...contests[contestId]} /> 
 					)
 				}
 			</div>
@@ -27,7 +27,7 @@ const ContestList = ({ contests, onContestClick }) => (
 
 // ContestList Prop Validation
 ContestList.propTypes = {
-	contests: React.PropTypes.array,
+	contests: React.PropTypes.object,
 	onContestClick: React.PropTypes.func.isRequired,
 };
 

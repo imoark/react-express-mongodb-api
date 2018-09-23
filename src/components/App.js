@@ -3,6 +3,7 @@ import React from 'react';
 // import component module of Header, so we keep this .js file concise
 import Header from './Header';
 import ContestList from './ContestList';
+import Contest from './Contest';
 
 // We are putting the HTML5 History API as a function here.
 // We are using the most basic/standard way of routing, with the help
@@ -39,16 +40,28 @@ class App extends React.Component {
 	}
 
 	fetchContest = (contestId) => {
-		pushState({ currentContestId: contestId },`/contest/${contestId}`)
+		pushState({ currentContestId: contestId },`/contest/${contestId}`);
+		this.setState({
+			pageHeader: this.state.contests[contestId].contestName,
+			currentContestId: contestId
+		});
 	};
 
+	currentContent() {
+		if (this.state.currentContestId){
+			return <Contest {...this.state.contests[this.state.currentContestId]} />;
+		}
+
+		return <ContestList 
+				onContestClick={this.fetchContest}
+				contests={this.state.contests} />;
+	} 
+	
 	render() {
 		return (
 		<div className="App">
 			<Header message={this.state.pageHeader} />
-			<ContestList 
-				onContestClick={this.fetchContest}
-				contests={this.state.contests} />
+			{this.currentContent()}
 		</div>
 		);
 	}
@@ -56,4 +69,5 @@ class App extends React.Component {
 
 
 /* For other modules to use the header module, we need to export it.*/
+
 export default App;
