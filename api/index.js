@@ -22,9 +22,11 @@ router.get('/contests', (req,res) => {
 	});
 });
 
-router.get('/contests', (req,res) => {
-	res.send({ contests: contests
-	});
+router.get('/contests/:contestId', (req,res) => {
+	let contest = contests[req.params.contestId];
+	contest.description = 'Lorem Ipsum'
+
+	res.send(contest);
 });
 
 // Finally, to be able to use the const "router" object, we need to export it

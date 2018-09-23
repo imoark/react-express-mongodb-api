@@ -4,6 +4,7 @@ import React from 'react';
 import Header from './Header';
 import ContestList from './ContestList';
 import Contest from './Contest';
+import * as api from '../api';
 
 // We are putting the HTML5 History API as a function here.
 // We are using the most basic/standard way of routing, with the help
@@ -41,10 +42,16 @@ class App extends React.Component {
 
 	fetchContest = (contestId) => {
 		pushState({ currentContestId: contestId },`/contest/${contestId}`);
-		this.setState({
-			pageHeader: this.state.contests[contestId].contestName,
-			currentContestId: contestId
-		});
+		api.fetchContest(contestId).then(contest => {
+			this.setState({
+				pageHeader: contest.contestName,
+				currentContestId: contest.id,
+				contests: {
+					...this.state.contests,
+					[contest.id]: contest
+				}
+			});
+		})
 	};
 
 	currentContent() {
