@@ -33,7 +33,7 @@ class App extends React.Component {
 	// 	this.state = { test: 42 };
 	// }
 	state = { 
-		pageHeader: 'Naming Contest',
+		// pageHeader: 'Naming Contest',
 		contests: this.props.initialContests
 	};
 	componentDidMount(){
@@ -54,9 +54,19 @@ class App extends React.Component {
 		})
 	};
 
+	pageHeader(){
+		if (this.state.currentContestId){
+			return this.currentContest().contestName
+		}
+	}
+
+	currentContest(){
+		return this.state.contests[this.state.currentContestId];
+	}
+
 	currentContent() {
 		if (this.state.currentContestId){
-			return <Contest {...this.state.contests[this.state.currentContestId]} />;
+			return <Contest {...this.currentContest()} />;
 		}
 
 		return <ContestList 

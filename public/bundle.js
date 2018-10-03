@@ -22475,7 +22475,7 @@
 			}
 	
 			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-				pageHeader: 'Naming Contest',
+				// pageHeader: 'Naming Contest',
 				contests: _this.props.initialContests
 			}, _this.fetchContest = function (contestId) {
 				pushState({ currentContestId: contestId }, '/contest/' + contestId);
@@ -22501,10 +22501,22 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {}
 		}, {
+			key: 'pageHeader',
+			value: function pageHeader() {
+				if (this.state.currentContestId) {
+					return this.currentContest().contestName;
+				}
+			}
+		}, {
+			key: 'currentContest',
+			value: function currentContest() {
+				return this.state.contests[this.state.currentContestId];
+			}
+		}, {
 			key: 'currentContent',
 			value: function currentContent() {
 				if (this.state.currentContestId) {
-					return _react2.default.createElement(_Contest2.default, this.state.contests[this.state.currentContestId]);
+					return _react2.default.createElement(_Contest2.default, this.currentContest());
 				}
 	
 				return _react2.default.createElement(_ContestList2.default, {
