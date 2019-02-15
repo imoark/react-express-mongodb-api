@@ -18,7 +18,8 @@ handle them in the second argument. Since this is gonna be an API call,
 so we'll send a JSON response by sending an object here.*/
 /* reduce() function in data.contests converts from array to object */
 router.get('/contests', (req,res) => {
-	res.send({ contests: contests
+	res.send({ 
+		contests: contests
 	});
 });
 

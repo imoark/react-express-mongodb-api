@@ -63,7 +63,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, { initialContests: window.initialData.contests }), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, { initialContests: window.initialData }), document.getElementById('root'));
 
 /***/ }),
 /* 1 */
@@ -22474,14 +22474,12 @@
 				args[_key] = arguments[_key];
 			}
 	
-			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-				// pageHeader: 'Naming Contest',
-				contests: _this.props.initialContests
-			}, _this.fetchContest = function (contestId) {
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = _this.props.initialContests, _this.fetchContest = function (contestId) {
+				alert('alert');
 				pushState({ currentContestId: contestId }, '/contest/' + contestId);
 				api.fetchContest(contestId).then(function (contest) {
 					_this.setState({
-						pageHeader: contest.contestName,
+						// pageHeader: contest.contestName,
 						currentContestId: contest.id,
 						contests: _extends({}, _this.state.contests, _defineProperty({}, contest.id, contest))
 					});
@@ -22496,16 +22494,35 @@
 		// 	this.state = { test: 42 };
 		// }
 	
-	
 		_createClass(App, [{
 			key: 'componentDidMount',
+	
+	
+			// { 
+			// 	pageHeader: 'Naming Contest',
+			// 	contests: this.props.initialContests
+			// };
+	
+			// In setting up state, try to set the minimum amount of state.
+			// Only put on the state the things that you can't compute from
+			// other things. And if there is something that you can compute,
+			// instead of putting it on the state, just compute it.
+	
+	
 			value: function componentDidMount() {}
 		}, {
 			key: 'pageHeader',
+	
+	
+			// create a pageHeader() 
+			// if I have a currentContestId on the state, then the pageHeader
+			// is going to be this.currentContest()
 			value: function pageHeader() {
 				if (this.state.currentContestId) {
 					return this.currentContest().contestName;
 				}
+	
+				return 'Naming Contests';
 			}
 		}, {
 			key: 'currentContest',
@@ -22529,7 +22546,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'App' },
-					_react2.default.createElement(_Header2.default, { message: this.state.pageHeader }),
+					_react2.default.createElement(_Header2.default, { message: this.pageHeader() }),
 					this.currentContent()
 				);
 			}
@@ -22538,6 +22555,9 @@
 		return App;
 	}(_react2.default.Component);
 	
+	App.propTypes = {
+		initialContests: _react2.default.PropTypes.object.isRequired
+	};
 	;
 	
 	/* For other modules to use the header module, we need to export it.*/

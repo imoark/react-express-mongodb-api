@@ -32,19 +32,34 @@ class App extends React.Component {
 	// 	super(props);
 	// 	this.state = { test: 42 };
 	// }
-	state = { 
-		// pageHeader: 'Naming Contest',
-		contests: this.props.initialContests
-	};
+
+	static propTypes = {
+		initialContests: React.PropTypes.object.isRequired
+	}
+
+	state = this.props.initialContests;
+
+	// { 
+	// 	pageHeader: 'Naming Contest',
+	// 	contests: this.props.initialContests
+	// };
+
+	// In setting up state, try to set the minimum amount of state.
+	// Only put on the state the things that you can't compute from
+	// other things. And if there is something that you can compute,
+	// instead of putting it on the state, just compute it.
+
+
 	componentDidMount(){
 
 	}
 
 	fetchContest = (contestId) => {
+		alert('alert')
 		pushState({ currentContestId: contestId },`/contest/${contestId}`);
 		api.fetchContest(contestId).then(contest => {
 			this.setState({
-				pageHeader: contest.contestName,
+				// pageHeader: contest.contestName,
 				currentContestId: contest.id,
 				contests: {
 					...this.state.contests,
@@ -54,10 +69,16 @@ class App extends React.Component {
 		})
 	};
 
+	// create a pageHeader() function/method
+	// if we have a currentContestId on the state, then the pageHeader
+	// is going to be this.currentContest()
+	// If not, then it will be just 'Naming Contests'
 	pageHeader(){
 		if (this.state.currentContestId){
 			return this.currentContest().contestName
 		}
+
+		return 'Naming Contests';
 	}
 
 	currentContest(){
@@ -77,7 +98,7 @@ class App extends React.Component {
 	render() {
 		return (
 		<div className="App">
-			<Header message={this.state.pageHeader} />
+			<Header message={this.pageHeader()} />
 			{this.currentContent()}
 		</div>
 		);
